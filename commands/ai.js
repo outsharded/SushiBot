@@ -28,15 +28,7 @@ module.exports = {
             .addStringOption(option => option
                 .setName('prompt')
                 .setDescription('Write a prompt to give to the AI. Make it short and descriptive.')
-                .setRequired(true)))
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('code')
-                .setDescription('Use the Codex engine to create code.')
-                .addStringOption(option => option
-                    .setName('prompt')
-                    .setDescription('Write a prompt to give to the AI. Keep it short and desciptive.')
-                    .setRequired(true))),
+                .setRequired(true))),
 	async execute(interaction) {
 //		if (bannedIDs.includes(interaction.user.id)) {
 			// If user is in list, stop the
@@ -68,36 +60,6 @@ module.exports = {
 		}
 //	}
 
-    	} else if (interaction.options.getSubcommand() === "code") {
-            const makingEmbed = new EmbedBuilder()
-                .setColor(colour)
-                .setTitle(`Generating: ${prompt}`)
-                .setTimestamp()
-                .setFooter({ text: `We use OpenAI's Codex engine to generate code!` });      
-    //        const sent = 
-            await interaction.reply({ embeds: [makingEmbed] });
-                try {
-                    const completion = await openai.createCompletion({
-                        "model": "code-cushman-001",
-                        "prompt": prompt,
-                        "temperature": .9,
-                        "max_tokens": 200,
-                        "user": interaction.user.id
-                    })
-                    const madeEmbed = new EmbedBuilder()
-                    .setColor(colour)
-                    .setTitle(`I generated: ${prompt}`)
-                    .setDescription(completion.data.choices[0].text)
-                    .setTimestamp()
-                    .setFooter({ text: `We use OpenAI's Codex engine to generate code!` });
-                    interaction.editReply({ embeds: [madeEmbed] });
-                //log report in console
-                    console.warn(`${interaction.user.id} ${interaction.user.username} Input:${prompt} Output: ${completion.data.choices[0].text}`)
-                    console.log('code command - completed')
-                } catch (error) {
-                    await interaction.editReply(error.message);
-                    console.warn(`Code command failed.`)
-                }
         } else if (interaction.options.getSubcommand() === "image") {
             const makingEmbed = new EmbedBuilder()
 			.setColor(colour)

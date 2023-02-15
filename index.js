@@ -46,11 +46,7 @@ const rest = new REST({ version: '10' }).setToken(token);
 
     console.warn("Bot is online");
     client.user.setActivity('/help')
-	return client.shard.fetchClientValues('guilds.cache.size')
-			.then(results => {
-				return console.log(`Server count: ${results.reduce((acc, guildCount) => acc + guildCount, 0)}`);
-			})
-			.catch(console.error);
+	console.log(client.guilds.cache.size)
 });
 
 
